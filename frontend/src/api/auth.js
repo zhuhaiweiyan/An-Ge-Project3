@@ -1,11 +1,11 @@
 // frontend/src/api/auth.js
 
-import axios from "axios";
+import api from "axios";
 
-const BASE_URL = "/api/auth";
+const BASE_URL = "/auth";
 
 export const register = async ({ username, password, passwordConfirm }) => {
-  const res = await axios.post(`${BASE_URL}/register`, {
+  const res = await api.post(`${BASE_URL}/register`, {
     username,
     password,
     passwordConfirm,
@@ -14,7 +14,7 @@ export const register = async ({ username, password, passwordConfirm }) => {
 };
 
 export const login = async ({ username, password }) => {
-  const res = await axios.post(`${BASE_URL}/login`, {
+  const res = await api.post(`${BASE_URL}/login`, {
     username,
     password,
   });
@@ -22,11 +22,11 @@ export const login = async ({ username, password }) => {
 };
 
 export const logout = async () => {
-  const res = await axios.post(`${BASE_URL}/logout`);
+  const res = await api.post(`${BASE_URL}/logout`);
   return res.data;
 };
 
 export const getHighScores = async () => {
-  const res = await axios.get(`${BASE_URL}/highscores`);
+  const res = await api.get(`${BASE_URL}/highscores`);
   return res.data;
 };
