@@ -40,8 +40,14 @@
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
-
+ 
 /* Remove bottom border on last row */
 .highscores-container tr:last-child td {
   border-bottom: none;
+}
+
+.highscores-container tr.current-user td {
+  background-color: #e6f7ff;
+  font-weight: bold;
+  color: #0056b3;
 }

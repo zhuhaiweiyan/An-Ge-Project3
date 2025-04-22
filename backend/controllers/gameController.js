@@ -141,22 +141,19 @@ exports.move = async (req, res) => {
   }
 };
 
-/**
- * GET /games/highscores
- * Return all users sorted by:
- *   1. wins descending
- *   2. losses ascending
- * And compute a score = wins*3 - losses
- */
 exports.getHighScores = async (req, res) => {
   try {
-    // fetch only needed fields, lean() → plain JS objects
-    const list = await User.find()
+    // 1) Fetch username, wins, losses
+    // 2) Sort: wins ↓, losses ↑, username A→Z
+    // 3) lean() for plain JS objects
+    const list = await User.find({
+      $expr: { $gt: [{ $add: ["$wins", "$losses"] }, 0] },
+    })
       .select("username wins losses -_id")
-      .sort({ wins: -1, losses: 1 })
+      .sort({ wins: -1, losses: 1, username: 1 })
       .lean();
 
-    // add computed score for each user
+    // 4) Compute score = wins*3 + losses
     const highscores = list.map((u) => ({
       username: u.username,
       wins: u.wins,

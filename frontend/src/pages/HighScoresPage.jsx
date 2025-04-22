@@ -1,13 +1,15 @@
 // src/pages/HighScoresPage.jsx
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getHighScores } from "../api/game";
+import { UserContext } from "../contexts/UserContext";
 import "../css/HighScoresPage.css";
 
 export default function HighScoresPage() {
   const [scores, setScores] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     // Fetch the high score list
@@ -51,7 +53,10 @@ export default function HighScoresPage() {
         </thead>
         <tbody>
           {scores.map((u) => (
-            <tr key={u.username}>
+            <tr
+            key={u.username}
+            className={user?.username === u.username ? "current-user" : ""}
+          >
               <td>{u.username}</td>
               <td>{u.wins}</td>
               <td>{u.losses}</td>

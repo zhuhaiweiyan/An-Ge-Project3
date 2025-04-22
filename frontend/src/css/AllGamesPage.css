@@ -66,6 +66,11 @@
   text-decoration: underline;
 }
 
+.allgames-container span {
+  text-decoration: none;
+  font-weight: bold;
+}
+
 /* Buttons (Join Game) */
 .allgames-container button {
   background-color: #00a8cc;
