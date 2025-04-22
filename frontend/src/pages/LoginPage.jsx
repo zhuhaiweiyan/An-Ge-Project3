@@ -19,7 +19,7 @@ export default function LoginPage() {
       console.log("Login response:", response);
       setUser(response.user);
       setToken(response.token);
-      navigate("/");
+      navigate("/games");
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
     }
