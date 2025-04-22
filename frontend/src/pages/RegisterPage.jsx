@@ -19,7 +19,7 @@ export default function RegisterPage() {
       console.log("Register response:", response);
       setUser(response.user);
       setToken(response.token);
-      navigate("/games");
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.error || "Registration failed");
     }

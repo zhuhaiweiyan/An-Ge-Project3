@@ -1,16 +1,13 @@
 // frontend/src/pages/HomePage.jsx
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 import battleshipImage from "../assets/images/battleship.jpg";
 import "../css/HomePage.css";
 
 export default function HomePage() {
-  const navigate = useNavigate();
-
-  const handleStartGame = () => {
-    navigate("/new-game");
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <div className="container">
@@ -33,9 +30,15 @@ export default function HomePage() {
       </div>
 
       <div className="button">
-        <button className="start-btn" onClick={handleStartGame}>
-          Start Game
-        </button>
+        {user ? (
+          <Link to="/new-game">
+            <button className="start-btn">Start Game</button>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <button className="start-btn">Login to Play</button>
+          </Link>
+        )}
       </div>
     </div>
   );
