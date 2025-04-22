@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api", // assumes backend is served under /api
+  baseURL: process.env.REACT_APP_API_URL || "/api",
 });
 
 // attach JWT if any
