@@ -36,18 +36,27 @@ function App() {
             <Route path="/highscores" element={<HighScoresPage />} />
             <Route path="/games" element={<AllGamesPage />} />
             <Route path="/new-game" element={<NewGameOptionsPage />} />
-            <Route path="/multiplayer-setup" element={<MultiplayerSetupPage />} />
-            <Route path="/multiplayer-setup/:gameId" element={<MultiplayerJoinSetupPage />} />
-            <Route path="/multiplayer-join-setup/:gameId" element={<MultiplayerJoinSetupPage />} />
+            <Route
+              path="/multiplayer-setup"
+              element={<MultiplayerSetupPage />}
+            />
+            <Route
+              path="/multiplayer-setup/:gameId"
+              element={<MultiplayerJoinSetupPage />}
+            />
+            <Route
+              path="/multiplayer-join-setup/:gameId"
+              element={<MultiplayerJoinSetupPage />}
+            />
 
+            {/* Single-player game pages */}
+            <Route path="/game/" element={<GamePage mode="single" />} />
+            
             {/* Multiplayer game page */}
             <Route
               path="/game/multiplayer/:gameId"
               element={<GamePage mode="multiplayer" />}
             />
-
-            {/* Single-player game pages */}
-            <Route path="/game/:mode" element={<GamePage />} />
 
             {/* Fallback for unmatched routes */}
             <Route path="*" element={<p>Not Found Page</p>} />

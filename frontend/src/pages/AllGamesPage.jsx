@@ -174,12 +174,13 @@ export default function AllGamesPage() {
                     <span>
                       {g.player1.username} vs. {g.player2.username}
                     </span>
-                    <span>Started: {fmt(g.startTime)}</span>
-                    {g.status === "Completed" && (
+                    {g.status === "Completed" ? (
                       <>
-                        <span>Ended: {fmt(g.endTime)}</span>
+                        {/* <span>Ended: {fmt(g.endTime)}</span> */}
                         <span>Winner: {g.winner.username}</span>
                       </>
+                    ) : (
+                      <span>Started: {fmt(g.startTime)}</span>
                     )}
                   </li>
                 ))}

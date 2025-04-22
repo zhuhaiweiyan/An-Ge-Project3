@@ -30,10 +30,20 @@ export default function GamePage({ mode }) {
 
   useEffect(() => {
     if (!isMultiplayer || !game) return;
+    if (game.status === "Pending") {
+      const intervalId = setInterval(() => {
+        loadGame(game._id);
+      }, 200);
+      return () => clearInterval(intervalId);
+    }
+  }, [isMultiplayer, game, loadGame]);
+
+  useEffect(() => {
+    if (!isMultiplayer || !game) return;
     if (game.status === "Active" && !game.isMyTurn) {
       const interval = setInterval(() => {
         loadGame(game._id);
-      }, 1000);
+      }, 200);
       return () => clearInterval(interval);
     }
   }, [isMultiplayer, game, loadGame]);
@@ -43,18 +53,15 @@ export default function GamePage({ mode }) {
 
   if (!game) return <p>Loading game…</p>;
 
-  const infoBanner = error ? <div className="info-banner">{error}</div> : null;
-
   const { status, winner, time, isMyTurn } = game;
+  const isWaiting = isMultiplayer && status === "Pending";
 
   return (
-    <div className="game-page-container">
-      {infoBanner}
+    <div className={`game-page-container${isWaiting ? " waiting" : ""}`}>
+      {isWaiting && <div className="info-banner">Waiting for opponent…</div>}
       <div className="top-bar">
         <h2 className="page-title">
-          {isMultiplayer
-            ? `Multiplayer: ${game._id}`
-            : `Single Player (${mode})`}
+          {isMultiplayer ? `Multiplayer: ${game._id}` : "Single Player --- AI"}
         </h2>
         <div className="info-section">
           <span className="timer">Time: {formatTime(time)}</span>

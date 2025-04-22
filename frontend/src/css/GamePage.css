@@ -1,7 +1,7 @@
 
 .game-page-container {
   max-width: 1200px;
-  margin: 80px auto 30px auto;
+  margin: 20px auto 20px auto;
   padding: 20px;
   background: #f4f4f4;
   border-radius: 8px;
@@ -221,6 +221,24 @@
   border-radius: 4px;
   cursor: grab;
 }
+
+.info-banner {
+  background-color: #fff3cd;       /* pale yellow */
+  border: 1px solid #ffeeba;       /* slightly darker border */
+  color: #856404;                  /* dark gold text */
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* hide the second board-wrapper when we’re waiting */
+.game-page-container.waiting .boards-container .board-wrapper:nth-child(2) {
+  display: none;
+}
+
 
 /* Responsive for mobile screens */
 @media (max-width: 768px) {

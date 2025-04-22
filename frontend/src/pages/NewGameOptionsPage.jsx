@@ -2,12 +2,11 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/NewGameOptionsPage.css"
+import "../css/NewGameOptionsPage.css";
 
 const modes = [
-  { key: "easy", label: "Single Player - Easy" },
-  { key: "hard", label: "Single Player - Hard" },
-  { key: "multiplayer", label: "Multiplayer" },
+  { key: "single", label: "Challenge AI" },
+  { key: "multiplayer", label: "Real Person Battle" },
 ];
 
 export default function NewGameOptionsPage() {
@@ -17,7 +16,7 @@ export default function NewGameOptionsPage() {
     if (mode === "multiplayer") {
       navigate("/multiplayer-setup");
     } else {
-      navigate(`/game/${mode}`);
+      navigate("/game");
     }
   };
 

@@ -1,4 +1,5 @@
 // src/contexts/SingleGameContext.js
+
 import React, {
   createContext,
   useContext,
@@ -11,22 +12,22 @@ import { generateBoard } from "../utils/ShipPlacement";
 const SingleGameContext = createContext();
 
 /**
- * Provider for single‐player (AI) Battleship game.
+ * Provider for single‑player (AI) Battleship game.
+ * Hides AI ships on the opponent’s board.
  */
 export function SingleGameProvider({ children }) {
-  // Boards: 10×10 arrays of { hasShip, isHit, isMiss }
+  // Player and AI boards
   const [playerBoard, setPlayerBoard] = useState([]);
   const [opponentBoard, setOpponentBoard] = useState([]);
-  // "player" or "ai"
   const [currentTurn, setCurrentTurn] = useState("player");
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
   const [time, setTime] = useState(0);
 
-  // AI memory for focused targeting
+  // AI targeting memory
   const [aiMemory, setAiMemory] = useState({ hitsQueue: [] });
 
-  // Reset boards & state
+  // Reset both boards and state
   const resetGame = useCallback(() => {
     setPlayerBoard(generateBoard());
     setOpponentBoard(generateBoard());
@@ -42,20 +43,18 @@ export function SingleGameProvider({ children }) {
     resetGame();
   }, [resetGame]);
 
-  // Timer: increment time every second while game is active
+  // Timer for single‑player
   useEffect(() => {
     if (gameOver) return;
-    const timerId = setInterval(() => {
-      setTime((t) => t + 1);
-    }, 1000);
-    return () => clearInterval(timerId);
+    const id = setInterval(() => setTime((t) => t + 1), 1000);
+    return () => clearInterval(id);
   }, [gameOver]);
 
-  // Check if board has any ships remaining
+  // Utility: check defeat
   const isDefeated = (board) =>
     board.every((row) => row.every((cell) => !(cell.hasShip && !cell.isHit)));
 
-  // Player makes a move at (r,c)
+  // Player’s move
   const playerMove = (r, c) => {
     if (currentTurn !== "player" || gameOver) return;
     const newBoard = opponentBoard.map((row) =>
@@ -63,14 +62,12 @@ export function SingleGameProvider({ children }) {
     );
     const cell = newBoard[r][c];
     if (cell.isHit || cell.isMiss) return;
-    if (cell.hasShip) {
-      cell.isHit = true;
-    } else {
-      cell.isMiss = true;
-    }
+
+    if (cell.hasShip) cell.isHit = true;
+    else cell.isMiss = true;
+
     setOpponentBoard(newBoard);
 
-    // Win check
     if (isDefeated(newBoard)) {
       setGameOver(true);
       setWinner("Player");
@@ -79,21 +76,23 @@ export function SingleGameProvider({ children }) {
     }
   };
 
-  // AI makes a move (focused targeting)
+  // AI’s move logic
   const aiMove = useCallback(() => {
     if (currentTurn !== "ai" || gameOver) return;
+
     const newBoard = playerBoard.map((row) =>
       row.map((cell) => ({ ...cell }))
     );
     let { hitsQueue } = aiMemory;
-    let move = hitsQueue.length ? hitsQueue.shift() : null;
+    let move = hitsQueue.shift() || null;
 
-    // Pick random if no queued targets
     if (!move) {
+      // pick random untargeted cell
       const candidates = [];
       newBoard.forEach((row, i) =>
         row.forEach((cell, j) => {
-          if (!cell.isHit && !cell.isMiss) candidates.push({ r: i, c: j });
+          if (!cell.isHit && !cell.isMiss)
+            candidates.push({ r: i, c: j });
         })
       );
       move = candidates[Math.floor(Math.random() * candidates.length)];
@@ -124,7 +123,6 @@ export function SingleGameProvider({ children }) {
     setPlayerBoard(newBoard);
     setAiMemory({ hitsQueue });
 
-    // Win check
     if (isDefeated(newBoard)) {
       setGameOver(true);
       setWinner("AI");
@@ -141,20 +139,29 @@ export function SingleGameProvider({ children }) {
     }
   }, [currentTurn, gameOver, aiMove]);
 
-  // Exposed API
+  // Exposed makeMove triggers only playerMove
   const makeMove = (r, c) => {
-    // playerMove only; AI moves handled in effect
     playerMove(r, c);
   };
 
-  // Compose a uniform "game" object
+  // **Hide AI ships** on the opponent board before exposing it
+  const visibleOpponentBoard = opponentBoard.map((row) =>
+    row.map((cell) => ({
+      hasShip: false,
+      isHit: cell.isHit,
+      isMiss: cell.isMiss,
+    }))
+  );
+
+  // Bundle into the same shape as multiplayer
   const game = {
     playerBoard,
-    opponentBoard,
+    opponentBoard: visibleOpponentBoard,
     currentTurn,
     status: gameOver ? "Completed" : "Active",
     winner,
     time,
+    isMyTurn: currentTurn === "player",
   };
 
   return (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import ShipSetup from "../utils/ShipSetup";
 import api from "../api/axios";
+import "../css/MultiplayerSetupPage.css";
 
 export default function MultiplayerSetupPage() {
   const { user } = useContext(UserContext);
@@ -39,7 +40,7 @@ export default function MultiplayerSetupPage() {
 
   return (
     <div className="setup-page">
-      <h2>Multiplayer Ship Setup</h2>
+      <h2>Ship Setup</h2>
       <p>Drag and place your ships, then click Complete Setup.</p>
       {error && <p className="error">{error}</p>}
       <ShipSetup onComplete={handleSetupComplete} />
