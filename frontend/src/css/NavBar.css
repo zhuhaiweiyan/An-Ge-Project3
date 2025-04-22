@@ -1,0 +1,88 @@
+/* NavBar.css */
+
+/* Make the navbar two rows: brand above, links below */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1a1a2e;
+  color: white;
+  display: flex;
+  flex-direction: column;      /* stack brand + links vertically */
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+/* Push page content below the two‑row navbar */
+body {
+  margin: 0;
+  padding-top: 100px;          /* adjust for 2 rows of navbar height */
+}
+
+/* Brand bar takes full width */
+.navbar-brand {
+  width: 100%;
+  text-align: center;
+}
+
+/* Brand link styling */
+.brand-link {
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.brand-link:hover {
+  color: #00a8cc;
+}
+
+/* Nav links row */
+.navbar-links {
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center all items by default */
+  gap: 20px;
+  position: relative;          /* for absolute positioning of username */
+  padding: 5px 0;
+  list-style: none;
+  margin: 0;
+}
+
+/* Base style for both <Link> and <span> */
+.nav-item {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+/* Highlight current page */
+.nav-item.active {
+  font-weight: bold;
+  border-bottom: 3px solid #00a8cc;
+}
+
+/* Hover effect */
+.nav-item:hover {
+  color: #00a8cc;
+}
+
+/* Move Hello,username to the far left of the links row */
+.nav-item.username {
+  position: absolute;
+  left: 20px;
+  cursor: default;
+}
+
+/* Ensure the other items don’t overlap the username */
+.navbar-links .nav-item:not(.username) {
+  /* no extra rules needed if gap is sufficient */
+}

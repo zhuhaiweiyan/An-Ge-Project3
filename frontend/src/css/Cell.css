@@ -1,0 +1,32 @@
+/* src/css/Cell.css */
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: #b0e0e6;  /* 默认水域色 */
+}
+
+/* 玩家自己舰船（只在自己的棋盘上可见） */
+.cell.has-ship {
+  background-color: #666;
+}
+
+/* 未中（Miss） */
+.cell.is-miss {
+  background-color: #cce5ff;
+}
+
+/* 击中（Hit） */
+.cell.is-hit {
+  background-color: #ff4d4f;
+}
+
+/* 当可点击时，显示手势和悬停效果 */
+.cell.clickable {
+  cursor: pointer;
+}
+.cell.clickable:hover {
+  opacity: 0.8;
+}
