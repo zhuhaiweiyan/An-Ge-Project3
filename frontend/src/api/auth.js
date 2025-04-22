@@ -1,6 +1,6 @@
 // frontend/src/api/auth.js
 
-import api from "axios";
+import api from "./axios";
 
 const BASE_URL = "/auth";
 
