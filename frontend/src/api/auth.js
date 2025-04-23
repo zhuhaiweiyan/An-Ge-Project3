@@ -2,7 +2,7 @@
 
 import api from "./axios";
 
-const BASE_URL = "/auth";
+const BASE_URL = "/api/auth";
 
 export const register = async ({ username, password, passwordConfirm }) => {
   const res = await api.post(`${BASE_URL}/register`, {

@@ -19,6 +19,7 @@ export default function RegisterPage() {
       console.log("Register response:", response);
       setUser(response.user);
       setToken(response.token);
+      localStorage.setItem("token", response.token);
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.error || "Registration failed");
