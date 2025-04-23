@@ -21,7 +21,7 @@ export default function GamePage({ mode }) {
     useGameContext(mode);
 
   useEffect(() => {
-    if (!user || !gameId) return;
+    if (!gameId) return;
     resetGame();
     if (isMultiplayer) {
       if (gameId) loadGame(gameId);
