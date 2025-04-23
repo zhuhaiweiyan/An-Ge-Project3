@@ -18,6 +18,7 @@ export const login = async ({ username, password }) => {
     username,
     password,
   });
+  console.log("LOGIN RAW RESPONSE:", res.data);
   return res.data;
 };
 
