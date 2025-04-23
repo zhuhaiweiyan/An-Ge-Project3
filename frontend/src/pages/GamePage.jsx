@@ -31,21 +31,17 @@ export default function GamePage({ mode }) {
 
   useEffect(() => {
     if (!isMultiplayer || !game) return;
-    if (game.status === "Pending") {
+
+    const shouldPoll =
+      game.status === "Pending" ||
+      (game.status === "Active" && !game.isMyTurn) ||
+      (game.status === "Active" && game.isMyTurn && !game.playerBoard);
+
+    if (shouldPoll) {
       const intervalId = setInterval(() => {
         loadGame(game._id);
       }, 200);
       return () => clearInterval(intervalId);
-    }
-  }, [isMultiplayer, game, loadGame]);
-
-  useEffect(() => {
-    if (!isMultiplayer || !game) return;
-    if (game.status === "Active" && !game.isMyTurn) {
-      const interval = setInterval(() => {
-        loadGame(game._id);
-      }, 200);
-      return () => clearInterval(interval);
     }
   }, [isMultiplayer, game, loadGame]);
 
