@@ -21,6 +21,7 @@ export default function LoginPage() {
       setToken(response.token);
       localStorage.setItem("token", response.token);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
     }

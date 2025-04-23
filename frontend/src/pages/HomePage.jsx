@@ -7,7 +7,9 @@ import battleshipImage from "../assets/images/battleship.jpg";
 import "../css/HomePage.css";
 
 export default function HomePage() {
-  const { user } = useContext(UserContext);
+  const { user: ctxUser } = useContext(UserContext);
+  const localUser = localStorage.getItem("user");
+  const user = ctxUser || (localUser ? JSON.parse(localUser) : null);
 
   return (
     <div className="container">
