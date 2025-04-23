@@ -40,7 +40,7 @@ export default function GamePage({ mode }) {
     if (!shouldPoll) return;
 
     const intervalId = setInterval(() => {
-      loadGame(gameId);
+      loadGame(gameId, true);
     }, 2000);
     return () => clearInterval(intervalId);
   }, [isMultiplayer, game, loadGame, gameId]);

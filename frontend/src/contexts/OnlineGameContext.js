@@ -14,9 +14,9 @@ export function OnlineGameProvider({ children }) {
   const [error, setError] = useState("");
 
   const loadGame = useCallback(
-    async (gameId) => {
+    async (gameId, silent = false) => {
       if (!gameId) return;
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError("");
 
       try {
@@ -65,6 +65,7 @@ export function OnlineGameProvider({ children }) {
         setError(err.response?.data?.error || "Failed to load game");
       } finally {
         setLoading(false);
+        if (!silent) setLoading(false);
       }
     },
     [user]
