@@ -7,6 +7,7 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
 ## 🗂️ Repository Structure
 
 ```bash
+/
 /  
 ├── backend/                         # Server-side (Express + MongoDB)  
 │   ├── controllers/                # Route handlers  
@@ -54,6 +55,8 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
     │   ├── css/                     # global & component styles  
     │   └── index.js                 # ReactDOM.render, wraps Router & Contexts  
     └── package.json                # project metadata & dependencies  
+```
+
 
 
 ---
@@ -114,6 +117,7 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
 
    # in frontend/
    npm install
+   ```
 
 2. **Run Locally** 
 
@@ -123,10 +127,10 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
 
     # frontend
     npm start
+    ```
 
 3. **Deployment (Render)** 
 
-    ```bash
     # backend (web service)
     https://an-ge-project3.onrender.com
 
