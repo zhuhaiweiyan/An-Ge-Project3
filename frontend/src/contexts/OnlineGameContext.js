@@ -78,7 +78,7 @@ export function OnlineGameProvider({ children }) {
       setError("");
       try {
         await apiMove(game._id, row, col);
-        await loadGame(game._id);
+        await loadGame(game._id, true);
       } catch (err) {
         setError(err.response?.data?.error || "Move failed");
       } finally {
