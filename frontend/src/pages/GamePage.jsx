@@ -37,19 +37,19 @@ export default function GamePage({ mode }) {
       game.status === "Pending" ||
       (game.status === "Active" && !game.isMyTurn) ||
       (game.status === "Active" && game.isMyTurn && !game.playerBoard);
+    if (!shouldPoll) return;
 
-    if (shouldPoll) {
-      const intervalId = setInterval(() => {
-        loadGame(gameId);
-      }, 2000);
-      return () => clearInterval(intervalId);
-    }
+    const intervalId = setInterval(() => {
+      loadGame(gameId);
+    }, 2000);
+    return () => clearInterval(intervalId);
   }, [isMultiplayer, game, loadGame, gameId]);
 
-  // if (loading) return <p>Loading game...</p>;
-  // if (!game) return null;
+  if (error) {
+    return <p className="error">Error loading game: {error}</p>;
+  }
 
-  if (!game) return <p>Loading game…</p>;
+  if (loading || !game) return <p>Loading game…</p>;
 
   const { status, winner, time, isMyTurn } = game;
   const isWaiting = isMultiplayer && status === "Pending";

@@ -5,7 +5,6 @@ import { getGame, makeMove as apiMove } from "../api/game";
 import { UserContext } from "./UserContext";
 
 const OnlineGameContext = createContext();
-let loadingInProgress = false;
 
 export function OnlineGameProvider({ children }) {
   const { user } = useContext(UserContext);
@@ -16,9 +15,7 @@ export function OnlineGameProvider({ children }) {
 
   const loadGame = useCallback(
     async (gameId) => {
-      if (!gameId || loadingInProgress) return;
-      loadingInProgress = true;
-
+      if (!gameId) return;
       setLoading(true);
       setError("");
 
@@ -68,7 +65,6 @@ export function OnlineGameProvider({ children }) {
         setError(err.response?.data?.error || "Failed to load game");
       } finally {
         setLoading(false);
-        loadingInProgress = false;
       }
     },
     [user]
@@ -91,11 +87,11 @@ export function OnlineGameProvider({ children }) {
     [game, loadGame]
   );
 
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     setGame(null);
     setError("");
     setLoading(false);
-  };
+  }, []);
 
   return (
     <OnlineGameContext.Provider
