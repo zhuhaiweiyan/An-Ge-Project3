@@ -64,7 +64,6 @@ export function OnlineGameProvider({ children }) {
       } catch (err) {
         setError(err.response?.data?.error || "Failed to load game");
       } finally {
-        setLoading(false);
         if (!silent) setLoading(false);
       }
     },
