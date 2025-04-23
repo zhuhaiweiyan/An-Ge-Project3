@@ -81,7 +81,7 @@ export function OnlineGameProvider({ children }) {
       } catch (err) {
         setError(err.response?.data?.error || "Move failed");
       } finally {
-        setLoading(false);
+        if (!silent) setLoading(false);
       }
     },
     [game, loadGame]
