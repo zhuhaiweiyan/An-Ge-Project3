@@ -71,7 +71,7 @@ export function OnlineGameProvider({ children }) {
   );
 
   const makeMove = useCallback(
-    async (row, col) => {
+    async (row, col, silent = false) => {
       if (!game) return;
       setLoading(true);
       setError("");
