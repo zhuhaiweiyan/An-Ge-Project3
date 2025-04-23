@@ -6,7 +6,55 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
 
 ## 🗂️ Repository Structure
 
-/ ├── backend │ ├── controllers │ │ ├── authController.js # handles register, login, logout, highscores │ │ └── gameController.js # CRUD for games, moves, high-score logic │ ├── models │ │ ├── User.js # user schema (username, password hash, wins/losses) │ │ └── Game.js # game schema (boards, players, status, winner) │ ├── routes │ │ ├── authRoutes.js # /api/auth/* │ │ └── gameRoutes.js # /api/games/* │ ├── middlewares │ │ └── authMiddleware.js # verifies JWT │ ├── config │ │ └── db.js # MongoDB connection │ └── server.js # Express app entrypoint └── frontend ├── public # static assets ├── src │ ├── api │ │ ├── axios.js # axios instance w/ baseURL & auth header │ │ ├── auth.js # register/login/logout wrappers │ │ └── game.js # getGame, makeMove, getHighScores │ ├── components │ │ ├── NavBar.jsx # dynamic nav based on login state │ │ ├── Board.jsx # renders a 10×10 grid of Cell │ │ └── Cell.jsx # individual grid cell, hit/miss styling │ ├── contexts │ │ ├── UserContext.js # global user + token store │ │ ├── SingleGameContext.js# single-player AI logic & timer │ │ └── OnlineGameContext.js# multiplayer fetch/move polling │ ├── pages │ │ ├── HomePage.jsx # landing page with Start/Login button │ │ ├── LoginPage.jsx # login form + error handling │ │ ├── RegisterPage.jsx # registration form + validation │ │ ├── HighScoresPage.jsx # sorted leaderboard (wins ↓, losses ↑, username) │ │ ├── AllGamesPage.jsx # lists open/active/completed games by category │ │ ├── NewGameOptionsPage.jsx# choose single vs. multiplayer │ │ ├── MultiplayerSetupPage.jsx # place ships to create game │ │ ├── MultiplayerJoinSetupPage.jsx# place ships to join game │ │ └── GamePage.jsx # main game UI with boards & turn indicator │ ├── utils │ │ └── ShipSetup.js # drag-and-drop ship placement component │ ├── css # styling for each component/page │ └── index.js # ReactDOM render, wraps providers & router └── package.json
+```bash
+/  
+├── backend/                         # Server-side (Express + MongoDB)  
+│   ├── controllers/                # Route handlers  
+│   │   ├── authController.js       # register, login, logout, highscores logic  
+│   │   └── gameController.js       # CRUD for games, moves, high-score processing  
+│   ├── models/                     # Mongoose schemas  
+│   │   ├── User.js                 # user schema: username, passwordHash, stats  
+│   │   └── Game.js                 # game schema: boards, players, status, winner  
+│   ├── routes/                     # Express routers  
+│   │   ├── authRoutes.js           # mounts at /api/auth/*  
+│   │   └── gameRoutes.js           # mounts at /api/games/*  
+│   ├── middlewares/                # custom Express middleware  
+│   │   └── authMiddleware.js       # JWT verification  
+│   ├── config/                     # configuration files  
+│   │   └── db.js                   # MongoDB connection setup  
+│   └── server.js                   # Express app entrypoint & CORS config  
+│  
+└── frontend/                        # Client-side (React)  
+    ├── public/                     # Static assets (index.html, favicon, etc.)  
+    ├── src/                        # React source files  
+    │   ├── api/                    # Axios instances & API wrappers  
+    │   │   ├── axios.js            # baseURL & auth header interceptor  
+    │   │   ├── auth.js             # register/login/logout wrappers  
+    │   │   └── game.js             # getGame, makeMove, getHighScores  
+    │   ├── components/             # Reusable UI components  
+    │   │   ├── NavBar.jsx          # top navigation bar  
+    │   │   ├── Board.jsx           # renders 10×10 Cell grid  
+    │   │   └── Cell.jsx            # individual board cell styling  
+    │   ├── contexts/               # React Contexts for global state  
+    │   │   ├── UserContext.js      # holds user + JWT token  
+    │   │   ├── SingleGameContext.js# single-player AI logic & timer  
+    │   │   └── OnlineGameContext.js# multiplayer fetch/move polling  
+    │   ├── pages/                  # Route components (one per URL)  
+    │   │   ├── HomePage.jsx        # landing page  
+    │   │   ├── LoginPage.jsx       # login form & error handling  
+    │   │   ├── RegisterPage.jsx    # registration form & validation  
+    │   │   ├── HighScoresPage.jsx  # leaderboard (sorted wins/losses)  
+    │   │   ├── AllGamesPage.jsx    # lists open/active/completed games  
+    │   │   ├── NewGameOptionsPage.jsx # choose single vs. multiplayer  
+    │   │   ├── MultiplayerSetupPage.jsx      # place ships to start game  
+    │   │   ├── MultiplayerJoinSetupPage.jsx  # place ships to join game  
+    │   │   └── GamePage.jsx         # main game UI with boards & turn indicator  
+    │   ├── utils/                   # helper components & functions  
+    │   │   └── ShipSetup.js         # drag-and-drop ship placement  
+    │   ├── css/                     # global & component styles  
+    │   └── index.js                 # ReactDOM.render, wraps Router & Contexts  
+    └── package.json                # project metadata & dependencies  
+
 
 ---
 
@@ -69,16 +117,18 @@ A full-stack Battleship game with single-player (AI) and real-time multiplayer s
 
 2. **Run Locally** 
 
-# backend
-npm run dev
+    ```bash
+    # backend
+    npm run dev
 
-# frontend
-npm start
+    # frontend
+    npm start
 
 3. **Deployment (Render)** 
 
-# backend (web service)
-https://an-ge-project3.onrender.com
+    ```bash
+    # backend (web service)
+    https://an-ge-project3.onrender.com
 
-# frontend (static site)
-https://an-ge-project3-1.onrender.com
+    # frontend (static site)
+    https://an-ge-project3-1.onrender.com
