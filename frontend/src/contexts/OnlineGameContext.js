@@ -16,15 +16,22 @@ export function OnlineGameProvider({ children }) {
 
   const loadGame = useCallback(
     async (gameId) => {
-      if (loadingInProgress) return;
+      if (!gameId || loadingInProgress) return;
       loadingInProgress = true;
+
       setLoading(true);
       setError("");
+
       try {
         const {
           data: { game: raw },
         } = await getGame(gameId);
 
+        const p1 = raw.player1._id.toString();
+        const p2 = raw.player2?._id?.toString();
+        const me = user.id; // from UserContext
+
+        const imPlayer1 = me === p1;
         const mapGrid = (numericGrid, hideShips) =>
           numericGrid.map((row) =>
             row.map((val) => ({
@@ -33,12 +40,6 @@ export function OnlineGameProvider({ children }) {
               isHit: val === 3,
             }))
           );
-
-        const p1 = raw.player1._id.toString();
-        const p2 = raw.player2?._id?.toString();
-        const me = user.id; // from UserContext
-
-        const imPlayer1 = me === p1;
 
         const playerBoard = imPlayer1
           ? mapGrid(raw.player1Board.grid, false)

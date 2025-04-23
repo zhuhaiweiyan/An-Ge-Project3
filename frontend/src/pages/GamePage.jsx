@@ -21,6 +21,7 @@ export default function GamePage({ mode }) {
     useGameContext(mode);
 
   useEffect(() => {
+    if (!user || !gameId) return;
     resetGame();
     if (isMultiplayer) {
       if (gameId) loadGame(gameId);
@@ -39,7 +40,7 @@ export default function GamePage({ mode }) {
 
     if (shouldPoll) {
       const intervalId = setInterval(() => {
-        loadGame(game._id);
+        loadGame(gameId);
       }, 2000);
       return () => clearInterval(intervalId);
     }
