@@ -44,7 +44,7 @@ export default function GamePage({ mode }) {
       }, 2000);
       return () => clearInterval(intervalId);
     }
-  }, [isMultiplayer, game, loadGame]);
+  }, [isMultiplayer, game, loadGame, gameId]);
 
   // if (loading) return <p>Loading game...</p>;
   // if (!game) return null;
