@@ -3,11 +3,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import { useGameContext } from "../contexts/GameContext";
 import ShipSetup from "../utils/ShipSetup";
 import api from "../api/axios";
 
 export default function MultiplayerJoinSetupPage() {
   const { user } = useContext(UserContext);
+  const { resetGame } = useGameContext("multiplayer");
   const { gameId } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -22,9 +24,8 @@ export default function MultiplayerJoinSetupPage() {
     );
     try {
       await api.post(`/games/join/${gameId}`, { player2Id: user.id });
-
       await api.put(`/games/setup/${gameId}`, { board: numericBoard });
-
+      resetGame();
       navigate(`/game/multiplayer/${gameId}`);
     } catch (err) {
       setError(err.response?.data?.error || "Join or setup failed");

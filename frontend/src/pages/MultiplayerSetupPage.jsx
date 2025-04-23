@@ -2,12 +2,14 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import { useGameContext } from "../contexts/GameContext";
 import ShipSetup from "../utils/ShipSetup";
 import api from "../api/axios";
 import "../css/MultiplayerSetupPage.css";
 
 export default function MultiplayerSetupPage() {
   const { user } = useContext(UserContext);
+  const { resetGame } = useGameContext("multiplayer");
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -32,6 +34,7 @@ export default function MultiplayerSetupPage() {
         board: numericBoard,
       });
       const gameId = res.data.game._id;
+      resetGame();
       navigate(`/game/multiplayer/${gameId}`);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create game");
