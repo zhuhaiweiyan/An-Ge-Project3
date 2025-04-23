@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "/api",
+  baseURL: "https://an-ge-project3.onrender.com/api",
   withCredentials: true,
 });
 
