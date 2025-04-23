@@ -73,15 +73,12 @@ export function OnlineGameProvider({ children }) {
   const makeMove = useCallback(
     async (row, col, silent = false) => {
       if (!game) return;
-      setLoading(true);
       setError("");
       try {
         await apiMove(game._id, row, col);
         await loadGame(game._id, true);
       } catch (err) {
         setError(err.response?.data?.error || "Move failed");
-      } finally {
-        if (!silent) setLoading(false);
       }
     },
     [game, loadGame]

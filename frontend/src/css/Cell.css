@@ -15,7 +15,7 @@
 
 /* 未中（Miss） */
 .cell.is-miss {
-  background-color: #cce5ff;
+  background-color: #0e5aaa;
 }
 
 /* 击中（Hit） */

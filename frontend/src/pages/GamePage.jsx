@@ -41,7 +41,7 @@ export default function GamePage({ mode }) {
 
     const intervalId = setInterval(() => {
       loadGame(gameId, true);
-    }, 2000);
+    }, 500);
     return () => clearInterval(intervalId);
   }, [isMultiplayer, game, loadGame, gameId]);
 
