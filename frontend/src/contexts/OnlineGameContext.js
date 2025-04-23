@@ -86,9 +86,15 @@ export function OnlineGameProvider({ children }) {
     [game, loadGame]
   );
 
+  const resetGame = () => {
+    setGame(null);
+    setError("");
+    setLoading(false);
+  };
+
   return (
     <OnlineGameContext.Provider
-      value={{ game, loading, error, loadGame, makeMove }}
+      value={{ game, loading, error, loadGame, makeMove, resetGame }}
     >
       {children}
     </OnlineGameContext.Provider>
